@@ -1,4 +1,3 @@
-import ResizeObserver from 'resize-observer-polyfill';
 import useRafState from '../useRafState';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
@@ -7,12 +6,10 @@ import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEff
 type Size = { width: number; height: number };
 
 function useSize(target: BasicTarget): Size | undefined {
-  const [state, setState] = useRafState<Size | undefined>(
-    () => {
-      const el = getTargetElement(target);
-      return el ? { width: el.clientWidth, height: el.clientHeight } : undefined
-    },
-  );
+  const [state, setState] = useRafState<Size | undefined>(() => {
+    const el = getTargetElement(target);
+    return el ? { width: el.clientWidth, height: el.clientHeight } : undefined;
+  });
 
   useIsomorphicLayoutEffectWithTarget(
     () => {
